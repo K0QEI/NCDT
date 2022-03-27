@@ -1,15 +1,18 @@
+
 #!/bin/bash
 
 
 
-/home/user/Downloads/nCat-Linux-amd64 -station Maestro -slice A -listen :4532 &
-/home/user/Downloads/nCat-Linux-amd64 -station Maestro -slice B -listen :4533 &
+/home/jim/Downloads/nCat-Linux-amd64 -station Maestro -slice A -listen :4532 &
+sleep 5
+/home/jim/Downloads/nCat-Linux-amd64 -station Maestro -slice B -listen :4533 &
+wait 5
 
 
-/home/user/Downloads/nDax-Linux-amd64 -station Maestro -slice A -daxch 1 -sink flex.sliceA.rx -source flex.tx &
-/home/user/Downloads/nDax-Linux-amd64 -station Maestro -slice B -daxch 2 -sink flex.sliceB.rx -tx=false &
-
-sleep 40
-
+/home/jim/Downloads/nDax-Linux-amd64 -station Maestro -slice A -daxch 1 -source flex.sliceA.rx -sink flex.sliceA.tx &
+sleep 5
+/home/jim/Downloads/nDax-Linux-amd64 -station Maestro -slice B -daxch 2 -source flex.sliceB.rx -sink flex.sliceB.tx &
+sleep 5
 rigctld -m2 -r127.0.0.1:4532 -t14532 &
-rigctld -m2 -r127.0.0.1:4533 -t14533 &
+sleep 5
+rigctld -m2 -r127.0.0.1:4533 -t14533
